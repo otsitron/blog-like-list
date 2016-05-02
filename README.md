@@ -1,6 +1,8 @@
 # ghostlist_v2
 Ghostlist 
 
+https://github.com/otsitron/ghostlist.git
+
 1. To preview this ghostlist locally, please start the node server. 
 Detailed instructions for the server are here in this directory: http-server/README.md
 
