@@ -68,7 +68,7 @@ var ghostBlog = {
         
         function setCoordinates(){
             coordinates.scrollerPos = document.body.scrollTop;  
-            coordinates.viewHeight = document.body.clientHeight + 200; //give some extra space 
+            coordinates.viewHeight = document.body.clientHeight + 200; //give some extra space to the view
             coordinates.elementPos = thisBlogItem.offset().top;                                                        
         };
         
