@@ -36,7 +36,11 @@ var ghostBlog = {
            
             self.windowActions(templateClone);
 		});
-        
+        //test single element
+        //testEl = $(self.options.listWrapper).find("li[data-id='5']");
+        //testEl.css("background-color","red");
+        //console.log(testEl)
+        //self.windowActions(testEl);
     },
     
     //do this once when a batch of data is loaded for the first time
@@ -56,35 +60,45 @@ var ghostBlog = {
     
     windowActions: function(thisBlogItem){
         var self = this;
-        var elementPos, scrollerPos, viewHeight;
+        var coordinates = {
+            elementPos: document.body.scrollTop,    //this is how far we scrolled
+            scrollerPos:document.body.clientHeight, //this is the height of the view
+            viewHeight: thisBlogItem.offset().top   //this is where the element is from the top of the page
+        }
+        
+        function setCoordinates(){
+            coordinates.scrollerPos = document.body.scrollTop;  
+            coordinates.viewHeight = document.body.clientHeight + 200; //give some extra space 
+            coordinates.elementPos = thisBlogItem.offset().top;                                                        
+        };
         
         //what happens when we scroll...
+        //but only vertically
         $(window).scroll(function() {
-            scrollerPos = document.body.scrollTop;      //this is how far we scrolled
-                                                        //(changes as we scroll)
-            viewHeight = document.body.clientHeight;    //this is the height of the view
-                                                        //(changes as we resize)
-            elementPos = thisBlogItem.offset().top;     //this is where the element is
-                                                        //located from the top of the page
-                                                        //(doesn't change for this element)
-            whereIsIt(scrollerPos, viewHeight, elementPos);
+            setCoordinates();
+            whereIsIt(coordinates);
         });
         
         //what happens when we resize the window
         $(window).resize(function() {
-            viewHeight = document.body.clientHeight;    //this is the height of the view
-                                                        //(changes as we resize)
-            whereIsIt(scrollerPos, viewHeight, elementPos);
+            setCoordinates();
+            whereIsIt();
         });
         
         //WHERE IS THIS ELEMENT? it's all relative...
-        function whereIsIt(scrollerPos, viewHeight, elementPos){
-            if(elementPos > scrollerPos + viewHeight){      //it's below the view :-\
+        function whereIsIt(){
+            //it's below the view :-\
+            if(coordinates.elementPos > coordinates.scrollerPos + coordinates.viewHeight){      
                 self.removeContent(thisBlogItem);
-            }else if(elementPos > scrollerPos - viewHeight){//it's in the view!!! :-)
+                console.log("below");
+            }//it's in the view!!! :-)
+            else if(coordinates.elementPos > coordinates.scrollerPos - coordinates.viewHeight){
                 self.addContent(thisBlogItem);
-            }else{                                          //it's above the view :-/
+                console.log("in");
+            }//it's above the view :-/
+            else{                                          
                 self.removeContent(thisBlogItem);
+                console.log("above");
             }
         };
     },
