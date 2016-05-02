@@ -1,4 +1,4 @@
-# ghostlist_v2
+# ghostlist
 Ghostlist 
 
 https://github.com/otsitron/ghostlist.git
