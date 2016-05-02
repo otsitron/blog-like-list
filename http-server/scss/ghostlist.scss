@@ -1,0 +1,89 @@
+//unsemantic
+
+@import "unsemantic/assets/sass/partials/reset";
+@import "unsemantic/assets/sass/partials/unsemantic-vars";
+@import "unsemantic/assets/sass/partials/unsemantic-grid-responsive";
+
+//colors & fonts
+$font-stack: Verdana, Geneva, Tahoma, sans-serif;
+$text-primary: #313131;
+$text-light: #a8abab;
+$text-invert: #FFF;
+$background-primary: #e1e3e4;
+$background-secondary: #f4f4f4;
+$highlight:#3c948b;
+$border: #d3d6d5;
+
+body {
+  font: 1em $font-stack;
+  color: $text-primary;
+  background-color: $background-primary;
+  margin: 0;
+}
+.allContent{
+  margin: 0;
+}
+nav{
+    background-color:$background-secondary;
+    border-bottom:1px solid $border;
+    color: $text-light;
+    padding: 1em;
+}
+header{
+    background-color:$background-primary;
+    color: $text-light;
+    border-bottom: 1px solid $border;
+}
+h1{
+    font-size:3em;
+    padding:0.5em;
+    margin: 0;
+    font-weight: normal;
+    text-align: center;
+}
+
+ul#theBlog{
+    margin: 0;
+    padding: 0;
+    li{
+        list-style: none;
+        padding-left: $gutter-half;
+        padding-right: $gutter-half;
+        margin-top:2em;
+        display: block;
+        time{
+            @extend %desktop-grid-20;
+            @extend %mobile-grid-80;
+            font-size: 0.9em;
+            line-height:2em;
+            text-align:right;
+            padding-right: 2em;
+            font-style: italic;
+            color: $highlight;
+        }
+        article{
+            @extend %desktop-grid-60;
+            @extend %mobile-grid-80;
+            padding-bottom:2em;
+            margin-bottom:2em;
+            border-bottom:1px solid $border;
+            h2{
+                color: $highlight;
+                font-weight: normal;
+                font-size: 1.5em;
+                margin-bottom:10px;
+            }
+            p{
+                margin-bottom:1em;
+            }
+            .author{
+                font-style: italic;
+                font-size: 0.8em;
+            }
+        }
+    }
+}
+
+.blogPostTemplate{
+    display:none;
+}
