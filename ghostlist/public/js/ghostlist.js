@@ -14,9 +14,29 @@ var ghostBlog = {
 	init:function(allData){
 		var self = this;
 		
+        self.chooseOrientation();
         self.options.blogPosts = allData.posts;
         self.buildPosts();
 	},
+    
+    //choose between horizontal and vertical orientation of the list
+    chooseOrientation: function(){
+        var self = this;
+        $(".orientation a").on("click", function(){
+            $(this).addClass("active");
+            if($(this).hasClass("vertical")){
+                $(this).closest("ul").find(".horizontal").removeClass("active")
+                $(self.options.listWrapper).removeClass("horizontal").addClass("vertical");
+                self.windowActions(templateClone);
+            }else {
+                $(this).closest("ul").find(".vertical").removeClass("active")
+                $(self.options.listWrapper).removeClass("vertical").addClass("horizontal");
+                self.windowActions(templateClone);
+                $(window).off("scroll");
+            }
+        });
+    },
+    
     buildPosts: function(){
         var self = this;
         
@@ -57,48 +77,75 @@ var ghostBlog = {
         //store HTML in the API to retrieve it again when needed.
         self.options.blogPosts[index].storeContent = elToFill.contents();
     },
-    
+   
     windowActions: function(thisBlogItem){
         var self = this;
         var coordinates = {
-            elementPos: document.body.scrollTop,    //this is how far we scrolled
-            scrollerPos:document.body.clientHeight, //this is the height of the view
-            viewHeight: thisBlogItem.offset().top   //this is where the element is from the top of the page
+            //vertical
+            elementPosV: undefined,     //this is where the element is from the top of the page
+            scrollerPosV: undefined,    //this is how far we scrolled
+            viewHeight: undefined,      //this is the height of the view
+        
+            //horizontal
+            elementPosH: thisBlogItem.data("id") * 500,     //this is where the element is from the left
+            scrollerPosH:undefined,     //this is how far we scrolled
+            viewWidth: undefined        //this is the width of the view
         }
         
-        function setCoordinates(){
-            coordinates.scrollerPos = document.body.scrollTop;  
+        function setVCoordinates(){
+            //vertical
+            coordinates.elementPosV = thisBlogItem.offset().top;                                                        
+            coordinates.scrollerPosV = document.body.scrollTop;  
             coordinates.viewHeight = document.body.clientHeight + 200; //give some extra space to the view
-            coordinates.elementPos = thisBlogItem.offset().top;                                                        
+            
+        }
+        function setHCoordinates(){
+            //horizontal
+            //coordinates.elementPosH = thisBlogItem.data("id") * 500;                                               
+            coordinates.scrollerPosH = $(self.options.listWrapper).scrollLeft();
+            coordinates.viewWidth = document.body.clientWidth;
+            
         };
+        
         
         //what happens when we scroll...
         //but only vertically
-        $(window).scroll(function() {
-            setCoordinates();
-            whereIsIt(coordinates);
+        $(window).on("scroll", function() {
+            //console.log("scrolling vertically")
+            setVCoordinates();
+            whereIsIt(coordinates.elementPosV, coordinates.scrollerPosV, coordinates.viewHeight);
+        });
+        //or horizontally...
+        $(self.options.listWrapper).on("scroll", function() {
+            setHCoordinates();
+            whereIsIt(coordinates.elementPosH, coordinates.scrollerPosH, coordinates.viewWidth);
         });
         
         //what happens when we resize the window
         $(window).resize(function() {
-            setCoordinates();
-            whereIsIt();
+            setVCoordinates();
+            whereIsIt(coordinates.elementPosV, coordinates.scrollerPosV, coordinates.viewHeight);
         });
         
-        //WHERE IS THIS ELEMENT? it's all relative...
-        function whereIsIt(){
-            //it's below the view :-\
-            if(coordinates.elementPos > coordinates.scrollerPos + coordinates.viewHeight){      
+        //it's all relative...
+        //WHERE IS THIS ELEMENT? 
+        function whereIsIt(elPos, scrollPos, viewSize){
+            console.log("elPos " , elPos);
+            console.log("scrollPos " , scrollPos);
+            console.log("viewSize " , viewSize);
+            console.log(" " );
+            //it's below the view or to the left :-\
+            if(elPos > scrollPos + viewSize){      
                 self.removeContent(thisBlogItem);
-                console.log("below");
+                console.log("below or left");
             }//it's in the view!!! :-)
-            else if(coordinates.elementPos > coordinates.scrollerPos - coordinates.viewHeight){
+            else if(elPos > scrollPos - viewSize && elPos < scrollPos + viewSize){
                 self.addContent(thisBlogItem);
                 console.log("in");
             }//it's above the view :-/
             else{                                          
                 self.removeContent(thisBlogItem);
-                console.log("above");
+                console.log("above or right");
             }
         };
     },
@@ -108,6 +155,7 @@ var ghostBlog = {
         //match the height of emptied element to its version
         //with contents to keep scrollbar from changing size
         itemToRemove.css("height",itemToRemove.height());
+        //itemToRemove.css("width",itemToRemove.width());
         
         //don't worry, we stored it in blogPosts object 
         //under appropriate id
@@ -117,6 +165,7 @@ var ghostBlog = {
         var self = this;
         
         itemToAdd.css("height",""); //this is no longer necessary
+        //itemToAdd.css("width",""); //this is no longer necessary
         itemToAdd.html(self.options.blogPosts[itemToAdd.data("id")].storeContent);
     }
 };

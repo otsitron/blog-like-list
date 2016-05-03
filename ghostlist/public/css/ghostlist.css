@@ -659,7 +659,7 @@ svg {
     *left: expression(Math.floor(-0.75 * (this.parentNode.offsetWidth - parseFloat(this.parentNode.currentStyle.paddingLeft) - parseFloat(this.parentNode.currentStyle.paddingRight))) + 'px');
     /* </IE7> */ }
 
-  .mobile-grid-80, ul#theBlog li time, ul#theBlog li article {
+  .mobile-grid-80, ul#theBlog.vertical li time, ul#theBlog.vertical li article {
     float: left;
     width: 80%;
     /* <IE7> */
@@ -809,7 +809,7 @@ svg {
     *left: expression(Math.floor(-0.66667 * (this.parentNode.offsetWidth - parseFloat(this.parentNode.currentStyle.paddingLeft) - parseFloat(this.parentNode.currentStyle.paddingRight))) + 'px');
     /* </IE7> */ }
 
-  .mobile-grid-100 {
+  .mobile-grid-100, ul#theBlog.horizontal li time, ul#theBlog.horizontal li article {
     clear: both;
     width: 100%; } }
 @media (min-width: 768px) {
@@ -894,7 +894,7 @@ svg {
     *left: expression(Math.floor(-0.15 * (this.parentNode.offsetWidth - parseFloat(this.parentNode.currentStyle.paddingLeft) - parseFloat(this.parentNode.currentStyle.paddingRight))) + 'px');
     /* </IE7> */ }
 
-  .grid-20, ul#theBlog li time {
+  .grid-20, ul#theBlog.vertical li time {
     float: left;
     width: 20%;
     /* <IE7> */
@@ -1094,7 +1094,7 @@ svg {
     *left: expression(Math.floor(-0.55 * (this.parentNode.offsetWidth - parseFloat(this.parentNode.currentStyle.paddingLeft) - parseFloat(this.parentNode.currentStyle.paddingRight))) + 'px');
     /* </IE7> */ }
 
-  .grid-60, ul#theBlog li article {
+  .grid-60, ul#theBlog.vertical li article {
     float: left;
     width: 60%;
     /* <IE7> */
@@ -1344,7 +1344,7 @@ svg {
     *left: expression(Math.floor(-0.66667 * (this.parentNode.offsetWidth - parseFloat(this.parentNode.currentStyle.paddingLeft) - parseFloat(this.parentNode.currentStyle.paddingRight))) + 'px');
     /* </IE7> */ }
 
-  .grid-100 {
+  .grid-100, ul#theBlog.horizontal li time, ul#theBlog.horizontal li article {
     clear: both;
     width: 100%; } }
 body {
@@ -1362,28 +1362,28 @@ nav.main {
   color: #a8abab;
   padding: 1em; }
 
-nav.direction {
+nav.orientation {
   text-align: center; }
-  nav.direction ul {
+  nav.orientation ul {
     margin: 0;
     padding: 0;
     border-bottom: 1px solid #d2d6d5;
     display: block; }
-    nav.direction ul li {
+    nav.orientation ul li {
       display: inline-block;
       margin: 0;
       padding: 0; }
-      nav.direction ul li a {
+      nav.orientation ul li a {
         display: block;
         text-decoration: none;
         padding: 1.5em 2.5em;
         color: #313131;
         -webkit-transition: background .25s ease-out, color .25s ease-out;
         transition: background .25s ease-out, color .25s ease-out; }
-      nav.direction ul li a:hover {
-        background-color: #f4f4f4; }
-      nav.direction ul li a.active {
-        font-weight: bold; }
+        nav.orientation ul li a:hover {
+          background-color: #f4f4f4; }
+        nav.orientation ul li a.active {
+          font-weight: bold; }
 
 header {
   background-color: #e1e3e4;
@@ -1402,14 +1402,10 @@ ul#theBlog {
   padding: 0; }
   ul#theBlog li {
     list-style: none;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-top: 2em;
     display: block; }
     ul#theBlog li time {
       font-size: 0.9em;
       line-height: 2em;
-      text-align: right;
       padding-right: 2em;
       font-style: italic;
       color: #3c948b; }
@@ -1427,6 +1423,30 @@ ul#theBlog {
       ul#theBlog li article .author {
         font-style: italic;
         font-size: 0.8em; }
+  ul#theBlog.vertical li {
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 2em; }
+    ul#theBlog.vertical li time {
+      text-align: right; }
+  ul#theBlog.horizontal {
+    overflow-x: scroll;
+    height: 300px;
+    width: 100%;
+    display: block;
+    white-space: nowrap;
+    border-bottom: 1px solid #d2d6d5; }
+    ul#theBlog.horizontal li {
+      width: 500px;
+      height: 265px;
+      display: inline-block;
+      white-space: normal;
+      padding: 10px 20px;
+      vertical-align: top;
+      border-right: 1px solid #d2d6d5;
+      overflow-y: auto; }
+      ul#theBlog.horizontal li time, ul#theBlog.horizontal li article {
+        border-bottom: none; }
 
 .blogPostTemplate {
   display: none; }
