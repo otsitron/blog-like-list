@@ -61,22 +61,22 @@ var ghostBlog = {
     windowActions: function(thisBlogItem){
         var self = this;
         var coordinates = {
-            elementPos: document.body.scrollTop,    //this is how far we scrolled
-            scrollerPos:document.body.clientHeight, //this is the height of the view
-            viewHeight: thisBlogItem.offset().top   //this is where the element is from the top of the page
+            elementPos: undefined,  //this is where the element is from the top of the page
+            scrollerPos:undefined,  //this is how far we scrolled
+            viewHeight: undefined   //this is the height of the view
         }
         
         function setCoordinates(){
             coordinates.scrollerPos = document.body.scrollTop;  
-            coordinates.viewHeight = document.body.clientHeight + 200; //give some extra space to the view
-            coordinates.elementPos = thisBlogItem.offset().top;                                                        
+            coordinates.viewHeight  = document.body.clientHeight + 200; //give some extra space to the view
+            coordinates.elementPos  = thisBlogItem.offset().top;                                                        
         };
         
         //what happens when we scroll...
         //but only vertically
         $(window).scroll(function() {
             setCoordinates();
-            whereIsIt(coordinates);
+            whereIsIt();
         });
         
         //what happens when we resize the window
@@ -85,20 +85,20 @@ var ghostBlog = {
             whereIsIt();
         });
         
-        //WHERE IS THIS ELEMENT? it's all relative...
+        //WHERE IS THIS ELEMENT (Vertically)? it's all relative...
         function whereIsIt(){
             //it's below the view :-\
             if(coordinates.elementPos > coordinates.scrollerPos + coordinates.viewHeight){      
                 self.removeContent(thisBlogItem);
-                console.log("below");
+                //console.log("below");
             }//it's in the view!!! :-)
             else if(coordinates.elementPos > coordinates.scrollerPos - coordinates.viewHeight){
                 self.addContent(thisBlogItem);
-                console.log("in");
+                //console.log("in");
             }//it's above the view :-/
             else{                                          
                 self.removeContent(thisBlogItem);
-                console.log("above");
+                //console.log("above");
             }
         };
     },
