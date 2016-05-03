@@ -1,4 +1,5 @@
 # ghostlist
+(with horizontal scroll - not working yet)
 
 https://github.com/otsitron/ghostlist.git
 
