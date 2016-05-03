@@ -1,6 +1,8 @@
-# ghostlist (vertical scroll only)
+
+# ghostlist (vertical scroll)
 Ghostlist
 
+https://github.com/otsitron/ghostlist.git
 1. To preview this ghostlist locally, please start the node server. 
 Detailed instructions for the server are here in this directory: ghostlist/README.md
 
