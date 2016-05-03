@@ -1,8 +1,8 @@
 //unsemantic
 
-@import "unsemantic/assets/sass/partials/reset";
-@import "unsemantic/assets/sass/partials/unsemantic-vars";
-@import "unsemantic/assets/sass/partials/unsemantic-grid-responsive";
+@import "../node_modules/unsemantic/assets/sass/partials/reset";
+@import "../node_modules/unsemantic/assets/sass/partials/unsemantic-vars";
+@import "../node_modules/unsemantic/assets/sass/partials/unsemantic-grid-responsive";
 
 //colors & fonts
 $font-stack: Verdana, Geneva, Tahoma, sans-serif;
