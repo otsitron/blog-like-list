@@ -54,13 +54,13 @@ var ghostBlog = {
             //add this to the end of the list in the DOM
 			$(self.options.listWrapper).append(templateClone);
            
-            self.windowActions(templateClone);
+            //self.windowActions(templateClone);
 		});
         //test single element
-        //testEl = $(self.options.listWrapper).find("li[data-id='5']");
-        //testEl.css("background-color","red");
+        testEl = $(self.options.listWrapper).find("li[data-id='5']");
+        testEl.css("background-color","red");
         //console.log(testEl)
-        //self.windowActions(testEl);
+        self.windowActions(testEl);
     },
     
     //do this once when a batch of data is loaded for the first time
@@ -87,7 +87,7 @@ var ghostBlog = {
             viewHeight: undefined,      //this is the height of the view
         
             //horizontal
-            elementPosH: thisBlogItem.data("id") * 500,     //this is where the element is from the left
+            elementPosH: undefined,     //this is where the element is from the left
             scrollerPosH:undefined,     //this is how far we scrolled
             viewWidth: undefined        //this is the width of the view
         }
@@ -101,7 +101,7 @@ var ghostBlog = {
         }
         function setHCoordinates(){
             //horizontal
-            //coordinates.elementPosH = thisBlogItem.data("id") * 500;                                               
+            coordinates.elementPosH = thisBlogItem.offset().left;                                               
             coordinates.scrollerPosH = $(self.options.listWrapper).scrollLeft();
             coordinates.viewWidth = document.body.clientWidth;
             
@@ -127,19 +127,48 @@ var ghostBlog = {
             whereIsIt(coordinates.elementPosV, coordinates.scrollerPosV, coordinates.viewHeight);
         });
         
+        
         //it's all relative...
-        //WHERE IS THIS ELEMENT? 
+        //WHERE IS THIS ELEMENT?
+        //works verticcally....
         function whereIsIt(elPos, scrollPos, viewSize){
-            console.log("elPos " , elPos);
-            console.log("scrollPos " , scrollPos);
-            console.log("viewSize " , viewSize);
-            console.log(" " );
+           
+                /*console.log("elPos " , elPos);
+                console.log("scrollPos " , scrollPos);
+                console.log("viewSize " , viewSize);*/
+                console.log(" " );
+                
+            //it's below the view or to the left :-\
+            if(elPos > scrollPos + viewSize){      
+                //self.removeContent(thisBlogItem);
+                console.log("left");
+            }//it's in the view!!! :-)
+            else if(elPos > scrollPos - viewSize){
+                //self.addContent(thisBlogItem);
+                console.log("in");
+            }//it's above the view :-/
+            else{                                          
+                //self.removeContent(thisBlogItem);
+                console.log("right");
+            }
+        };
+        
+        //it's all relative...
+        //WHERE IS THIS ELEMENT?
+        //works verticcally....
+        /*function whereIsIt(elPos, scrollPos, viewSize){
+           
+                console.log("elPos " , elPos);
+                console.log("scrollPos " , scrollPos);
+                console.log("viewSize " , viewSize);
+                console.log(" " );
+                
             //it's below the view or to the left :-\
             if(elPos > scrollPos + viewSize){      
                 self.removeContent(thisBlogItem);
                 console.log("below or left");
             }//it's in the view!!! :-)
-            else if(elPos > scrollPos - viewSize && elPos < scrollPos + viewSize){
+            else if(elPos > scrollPos - viewSize){
                 self.addContent(thisBlogItem);
                 console.log("in");
             }//it's above the view :-/
@@ -147,7 +176,7 @@ var ghostBlog = {
                 self.removeContent(thisBlogItem);
                 console.log("above or right");
             }
-        };
+        };*/
     },
     removeContent: function(itemToRemove){
         var self = this;
