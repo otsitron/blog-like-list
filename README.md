@@ -1,4 +1,5 @@
 # ghostlist
+this repo is private. use proper login!
 (with horizontal scroll - not working yet)
 
 https://github.com/otsitron/ghostlist.git
