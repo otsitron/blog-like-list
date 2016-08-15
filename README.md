@@ -16,6 +16,3 @@ http://localhost:8080/ghostlist.html
 sass --watch scss/ghostlist.scss:public/css/ghostlist.css
 
 4. I use unsemantic for responsiveness (can be found in scss folder)
-
-5. Preview this page on my site:
-http://olgatsitron.com/tumblrTst/ghostlist.html
